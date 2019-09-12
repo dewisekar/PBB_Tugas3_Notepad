@@ -2,11 +2,16 @@ package com.example.pbb_tugas3_notepad;
 
 import androidx.appcompat.app.AppCompatActivity;
 
+import android.content.Context;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.text.Editable;
 import android.text.TextWatcher;
 import android.widget.EditText;
+
+import java.util.HashMap;
+import java.util.HashSet;
 
 public class NoteEditActivity extends AppCompatActivity {
 
@@ -41,6 +46,10 @@ public class NoteEditActivity extends AppCompatActivity {
             public void onTextChanged(CharSequence charSequence, int i, int i1, int i2) {
                 MainActivity.notes.set(noteId, charSequence.toString());
                 MainActivity.arrayAdapter.notifyDataSetChanged();
+
+                SharedPreferences sharedPreferences = getApplicationContext().getSharedPreferences("com.example.pbb_tugas3_notepad", Context.MODE_PRIVATE);
+                HashSet<String> set = new HashSet(MainActivity.notes);
+                sharedPreferences.edit().putStringSet("notes",set).apply();
             }
 
             @Override
